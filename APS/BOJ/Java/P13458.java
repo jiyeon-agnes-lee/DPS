@@ -11,25 +11,17 @@ public class P13458 {
 		}
 		int b = sc.nextInt();
 		int c = sc.nextInt();
-		
+		long ans = 0;
 		for(int i=0; i <n; i++) {
-			if(a[i] - b <= 0) {
-				a[i] = 0;
-				System.out.println(i + " " + a[i]);
-			}else if(a[i]-b <= c){
-				a[i] = 1;
-				System.out.println(i + " " + a[i]);	
-			}else {
-				a[i] = (int) Math.round((a[i] - b)/c *10)/10;
-				System.out.println(i + " " + a[i]);
+			a[i] = a[i] -b;
+			ans++;
+			if(a[i] > 0) {
+				ans += a[i]/c;
+				if(a[i] % c != 0) {
+					ans++;
+				}
 			}
 			
-		}
-		
-		int ans = n;
-		for(int i=0;i<n;i++) {
-			ans += a[i];
-			System.out.println(i + " " + ans);
 		}
 		System.out.println(ans);
 	}
