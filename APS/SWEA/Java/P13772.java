@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 public class P13772 {
+	// 변수 선언
 	static int[][] arr;
 	static int N, P, sumV;
 	public static void main(String[] args) {
