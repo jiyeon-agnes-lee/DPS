@@ -1,4 +1,5 @@
-#1 Spring Framework를 사용하는 이유
+# Spring Framework를 사용하는 이유
+
 1. 높은 사용률
 2. 높은 확장성
 3. 높은 생산성
