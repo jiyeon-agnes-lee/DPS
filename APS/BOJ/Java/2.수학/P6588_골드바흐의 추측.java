@@ -15,20 +15,21 @@ public class Main {
         StringBuilder sb = new StringBuilder();
         while(true) {
             int t = sc.nextInt();
-            if(t == 0) break;
+            if(t == 0) {
+                System.out.println(sb.toString());
+                break;
+            }
             boolean isProve = false;
-            sb.setLength(0);
             for(int a = 3; a <= t/2; a+=2) {
                 int b = t-a;
                 if(b%2 != 0 && !isNotPrime[a] && !isNotPrime[b]){
-                    sb.append(t).append(" = ").append(a).append(" + ").append(b);
-                    System.out.println(sb.toString());
+                    sb.append(t).append(" = ").append(a).append(" + ").append(b).append("\n");
                     isProve = true;
                     break;
                 }
             }
             if(!isProve) {
-                System.out.println("Goldbach's conjecture is wrong.");
+                sb.append("Goldbach's conjecture is wrong.").append("\n");
             }
         }
     }
