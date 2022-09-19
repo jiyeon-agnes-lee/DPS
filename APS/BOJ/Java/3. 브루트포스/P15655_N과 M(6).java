@@ -40,7 +40,7 @@ public class Main {
         for(int i = start; i < n; i++) {
             if(!visited[i]) {
                 visited[i] = true;
-                arr[i] = nums[i];
+                arr[depth] = nums[i];
                 dfs(i, depth+1);
                 visited[i] = false;
             }
