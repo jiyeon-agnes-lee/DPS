@@ -1,64 +1,72 @@
-import java.io.*;
-import java.util.Arrays;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
 
 public class Main {
   
-    static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-    static int[] cond;
-    static int[][] nums;
-    static int[] elem;
+    static int n, m, k;
+    static int maxV;
+    static int[][] map;
     static int[][] visited;
-    static int max = Integer.MIN_VALUE;
-
+    static int[] arr;
+    static StringBuilder sb = new StringBuilder();
+  
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        cond = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-        nums = new int[cond[0]][cond[1]];
-        elem = new int[Math.min(4, cond[0]*cond[1])];
-        visited = new int[cond[0]][cond[1]];
-        for (int i = 0 ; i < cond[0]; i++) nums[i] = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-        find_sequence(0);
-
-        bw.write(Integer.toString(max));
-        bw.flush();
-    }
-
-    public static void find_sequence(int pos) {
-        if (pos == cond[2]) {
-            int res = 0;
-            for (int num : elem) {
-                res += num;
-            }
-            max = (max > res) ? max : res;
-        }
-        else {
-            for (int i = 0; i < cond[0]; i++) {
-                for (int j = 0; j < cond[1]; j++) {
-                    if (visited[i][j] > 0)
-                        continue;
-                    check_adjacency(i, j);
-                    elem[pos] = nums[i][j];
-                    find_sequence(pos + 1);
-                    return_adjacency(i, j);
-                }
+        StringTokenizer st = new StringTokenizer(br.readLine());
+      
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        k = Integer.parseInt(st.nextToken());
+        maxV = Integer.MIN_VALUE;
+        
+        arr = new int[k];
+        visited = new int[n][m];
+        map = new int[n][m];
+        for(int i = 0 ; i < n ; i++) {
+            st = new StringTokenizer(br.readLine());
+            for(int j = 0 ; j < m; j++){
+                map[i][j] = Integer.parseInt(st.nextToken());
             }
         }
+        dfs(0);
+        System.out.println(maxV);
     }
-
-    public static void check_adjacency(int i, int j) {
-        visited[i][j]++;
-        if (i > 0) visited[i - 1][j]++;
-        if (i < cond[0] - 1) visited[i + 1][j]++;
-        if (j > 0) visited[i][j - 1]++;
-        if (j < cond[1] - 1) visited[i][j + 1]++;
-    }
-
-    public static void return_adjacency(int i, int j) {
-        visited[i][j]--;
-        if (i > 0) visited[i - 1][j]--;
-        if (i < cond[0] - 1) visited[i + 1][j]--;
-        if (j > 0) visited[i][j - 1]--;
-        if (j < cond[1] - 1) visited[i][j + 1]--;
+    private static void dfs(int depth) {
+        if(depth == k) {
+            int sumV = 0;
+            for(int a : arr){
+                sumV += a;
+            }
+            maxV = maxV > sumV ? maxV : sumV;
+            return;
+        }
+       
+        for(int i = 0 ; i < n ; i++) {
+            for(int j = 0; j < m ; j++) {
+                if(visited[i][j] > 0) continue;
+                visited[i][j]++;
+                if(i-1 >= 0)
+                    visited[i-1][j]++;
+                if(i+1 < n)
+                    visited[i+1][j]++;
+                if(j-1 >= 0)
+                    visited[i][j-1]++;
+                if(j+1 < m)
+                    visited[i][j+1]++;
+                arr[depth] = map[i][j];
+                dfs(depth+1);
+                visited[i][j]--;
+                if(i-1 >= 0)
+                    visited[i-1][j]--;
+                if(i+1 < n)
+                    visited[i+1][j]--;
+                if(j-1 >= 0)
+                    visited[i][j-1]--;
+                if(j+1 < m)
+                    visited[i][j+1]--;
+            }
+        }
     }
 }
